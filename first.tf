@@ -21,8 +21,18 @@ resource "aws_ecs_task_definition" "first_task_definition" {
           hostPort      = 8080
         }
       ]
+      mountPoints = [
+        {
+          sourceVolume  = "nginx-html"
+          containerPath = "/usr/share/nginx/html"
+        }
+      ]
     }
   ])
+  volume {
+    name      = "nginx-html"
+    host_path = "/tmp/html/first"
+  }
 }
 
 resource "aws_autoscaling_attachment" "first" {

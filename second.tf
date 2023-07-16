@@ -21,8 +21,18 @@ resource "aws_ecs_task_definition" "second_task_definition" {
           hostPort      = 8081
         }
       ]
+      mountPoints = [
+        {
+          sourceVolume  = "nginx-html"
+          containerPath = "/usr/share/nginx/html"
+        }
+      ]
     }
   ])
+  volume {
+    name      = "nginx-html"
+    host_path = "/tmp/html/second"
+  }
 }
 
 resource "aws_autoscaling_attachment" "second" {

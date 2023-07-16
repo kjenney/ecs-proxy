@@ -38,6 +38,9 @@ resource "aws_launch_configuration" "ecs" {
   user_data = <<-EOF
               #!/bin/bash
               echo ECS_CLUSTER=my-services >> /etc/ecs/ecs.config
+              mkdir -p /tmp/html/first /tmp/html/second
+              echo "Welcome to first service" > /tmp/html/first/index.html
+              echo "Welcome to second service" > /tmp/html/second/index.html
               EOF
 }
 
