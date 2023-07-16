@@ -8,8 +8,8 @@ Proxy connections from a PrivateLink NLB to a set of a ECS services
     a) Subnets
     b) Security groups
 2. NLB
-    a. Listeners
+    a) Listeners
 3. ECS services
-    a. Instances
+    a) Instances
 
 
