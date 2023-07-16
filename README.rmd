@@ -12,22 +12,32 @@ Proxy connections from a PrivateLink NLB to a set of a ECS services
 3. ECS services
     a) Instances
 
-
- ## Testing
+## Provisioning
 
 ```
 terraform init
 terraform apply
 ```
 
-You'll have to wait a couple of minutes for the Target groups` instances to become available after initial attachment
+## Testing
 
 ```
-dns_name=$(terraform output -raw nlb_dns_name)
-first_port=$(terraform output -raw first_service_port)
-export DNS_NAME=$dns_name
-export FIRST_PORT=$first_port
-echo "The DNS name of the ALB is $DNS_NAME"
-echo "The first ECS Service is listening on port $FIRST_PORT"
-curl http://$DNS_NAME:$FIRST_PORT
+terraform output -json | jq -r 'to_entries[] | .key + "=" + (.value.value | tostring)' | while read -r line ; do echo export "$line"; done > outputs.sh
+source outputs.sh
+echo "The DNS name of the ALB is $nlb_dns_name"
+echo "The first ECS Service is listening on port $first_service_port"
  ```
+
+You'll have to wait for the Target groups to settle. I created a script for this. Run it like so:
+
+```
+./scripts/wait_for_target_group.sh $first_service_target_group_arn
+./scripts/wait_for_target_group.sh $second_service_target_group_arn
+```
+
+Once you've got targets for the NLB you can run the following commands to test them out:
+
+```
+curl http://$nlb_dns_name:$first_service_port
+curl http://$nlb_dns_name:$second_service_port
+```
