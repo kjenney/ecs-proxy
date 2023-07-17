@@ -4,13 +4,24 @@ Proxy connections from a PrivateLink NLB to a set of a ECS services
 
 ## Components
 
-1. VPC - dependency
-    a) Subnets
-    b) Security groups
-2. NLB
-    a) Listeners
-3. ECS services
-    a) Instances
+<ol type="1">
+  <li>VPC - dependency</li>
+    <ol type="a">
+      <li>Subnets</li>
+      <li>Security groups</li>
+      <li>Letter C</li>
+    </ol>
+  <li>NLB</li>
+    <ol type="a">
+      <li>Listeners</li>
+    </ol>
+  <li>ECS services</li>
+    <ol type="a">
+      <li>Instances</li>
+      <li>Cluster</li>
+      <li>Services</li>
+    </ol>  
+</ol>
 
 ## Provisioning
 
